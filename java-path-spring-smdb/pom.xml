@@ -8,7 +8,7 @@
         <artifactId>java-path-spring-sgdigital-assignment</artifactId>
         <version>2021.1.0</version>
     </parent>
-    <artifactId>java-path-spring-sgdigital-assignment-smdb</artifactId>
+    <artifactId>java-path-spring-smdb</artifactId>
 
     <!-- Meta-data -->
     <name>[${project.artifactId}]</name>
