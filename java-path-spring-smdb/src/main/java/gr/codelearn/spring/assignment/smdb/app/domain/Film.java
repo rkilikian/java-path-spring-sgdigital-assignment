@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Contributor extends BaseModel {
+public class Film  extends BaseModel {
     private String title;
     private String genre;
     private Date releaseDate;
