@@ -25,12 +25,12 @@ import javax.validation.constraints.NotNull;
 public class TVShowContributor  extends BaseModel {
     @JsonBackReference("tvShowContributors")
     @NotNull
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "tvshow_id")
     private TVShow tvShow;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="contributor_id")
     private Contributor contributor;
 

@@ -9,9 +9,9 @@ import java.util.List;
 
 @Repository
 public interface FilmRepository extends JpaRepository<Film, Long> {
-    @Query("select f from Film f join fetch f.filmContributors where f.id = ?1")
+    @Query("select f from Film f join fetch f.filmContributors fc join fetch fc.contributor c where f.id = ?1")
     Film findLazy(Long id);
 
-    @Query("select distinct f from Film f join fetch f.filmContributors fc")
+    @Query("select distinct f from Film f join fetch f.filmContributors fc join fetch fc.contributor c")
     List<Film> findAllLazy();
 }
