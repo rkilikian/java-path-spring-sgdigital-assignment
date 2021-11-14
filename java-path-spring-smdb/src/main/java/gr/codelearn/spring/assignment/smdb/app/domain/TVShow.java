@@ -1,8 +1,5 @@
 package gr.codelearn.spring.assignment.smdb.app.domain;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -25,7 +22,6 @@ import java.util.List;
 @Entity
 @Table(name = "TVSHOWS")
 @SequenceGenerator(name = "idGenerator", sequenceName = "TV_SHOWS_SEQ", initialValue = 1, allocationSize = 1)
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Long.class)
 public class TVShow extends BaseModel {
     @NotNull(message = "TV Show's title should not be empty.")
     @Column(length = 50, nullable = false)
@@ -53,7 +49,6 @@ public class TVShow extends BaseModel {
     @NotNull
     private int seasonsCount;
 
-    @JsonManagedReference("tvShowContributors")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "tvShow")

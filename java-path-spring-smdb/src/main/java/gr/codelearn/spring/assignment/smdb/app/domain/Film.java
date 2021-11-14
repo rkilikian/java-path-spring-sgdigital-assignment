@@ -20,7 +20,6 @@ import java.util.List;
 @Entity
 @Table(name = "FILMS")
 @SequenceGenerator(name = "idGenerator", sequenceName = "FILMS_SEQ", initialValue = 1, allocationSize = 1)
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Long.class)
 public class Film extends BaseModel {
     @NotNull(message = "Film's title should not be empty.")
     @Column(length = 50, nullable = false)

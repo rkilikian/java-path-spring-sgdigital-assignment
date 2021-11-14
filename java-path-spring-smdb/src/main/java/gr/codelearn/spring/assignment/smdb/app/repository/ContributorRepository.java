@@ -9,10 +9,10 @@ import java.util.List;
 
 @Repository
 public interface ContributorRepository extends JpaRepository<Contributor, Long> {
-    @Query("select c from Contributor c join fetch c.filmContributions fc where c.id = ?1")
+    @Query("select c from Contributor c where c.id = ?1")
     Contributor findLazy(Long id);
 
-    @Query("select distinct c from Contributor  c join fetch c.filmContributions fc join fetch fc.film f")
+    @Query("select distinct c from Contributor c")
     List<Contributor> findAllLazy();
 
 }

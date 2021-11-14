@@ -1,5 +1,6 @@
 package gr.codelearn.spring.assignment.smdb.app.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,7 @@ import java.io.Serializable;
 public class BaseModel implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "idGenerator")
     private Long id;
 }

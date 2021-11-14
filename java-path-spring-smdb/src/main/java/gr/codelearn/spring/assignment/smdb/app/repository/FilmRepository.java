@@ -12,6 +12,6 @@ public interface FilmRepository extends JpaRepository<Film, Long> {
     @Query("select f from Film f join fetch f.filmContributors where f.id = ?1")
     Film findLazy(Long id);
 
-    @Query("select distinct f from Film f join fetch f.filmContributors fc join fetch fc.contributor c")
+    @Query("select distinct f from Film f join fetch f.filmContributors fc")
     List<Film> findAllLazy();
 }

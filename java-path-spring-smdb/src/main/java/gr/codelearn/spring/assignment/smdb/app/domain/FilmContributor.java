@@ -20,7 +20,6 @@ import javax.validation.constraints.NotNull;
         @Index(columnList = "contributortype_id")
 })
 @SequenceGenerator(name = "idGenerator", sequenceName = "FILM_CONTRIBUTORS_SEQ", initialValue = 1, allocationSize = 1)
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Long.class)
 public class FilmContributor extends BaseModel {
     @JsonBackReference("filmContributors")
     @NotNull
@@ -28,11 +27,9 @@ public class FilmContributor extends BaseModel {
     @JoinColumn(name="film_id")
     private Film film;
 
-    @JsonBackReference("filmContributions")
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name="contributor_id")
-    //@JsonIgnore
     private Contributor contributor;
 
     @NotNull
