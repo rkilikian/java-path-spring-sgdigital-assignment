@@ -9,5 +9,9 @@ public interface ContributorService extends BaseService<Contributor, Long> {
 
     Contributor findLazy(Long id);
 
+    List<Contributor> findByFirstName(final String firstName);
+
+    List<Contributor> findByLastName(final String lastName);
+
     List<Contributor> findAllLazy();
 }

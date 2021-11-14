@@ -28,6 +28,14 @@ public class ContributorServiceImpl extends BaseServiceImpl<Contributor> impleme
         return contributorRepository.findLazy(id);
     }
 
+    public List<Contributor> findByFirstName(final String firstName) {
+        return contributorRepository.findByFirstName(firstName);
+    }
+
+    public List<Contributor> findByLastName(final String lastName) {
+        return contributorRepository.findByLastName(lastName);
+    }
+
     @Override
     public List<Contributor> findAllLazy() {
         return contributorRepository.findAllLazy();

@@ -12,7 +12,13 @@ public interface ContributorRepository extends JpaRepository<Contributor, Long> 
     @Query("select c from Contributor c where c.id = ?1")
     Contributor findLazy(Long id);
 
+    @Query("select c from Contributor c where lower(c.firstName) = ?1")
+    List<Contributor> findByFirstName(String firstName);
+
+    @Query("select c from Contributor c where lower(c.lastName) = ?1")
+    List<Contributor> findByLastName(String lastName);
+
     @Query("select distinct c from Contributor c")
     List<Contributor> findAllLazy();
-
+    
 }
