@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ContributorServiceImpl extends BaseServiceImpl<Contributor> implements ContributorService {
@@ -21,8 +23,13 @@ public class ContributorServiceImpl extends BaseServiceImpl<Contributor> impleme
         return contributorRepository.findAll().stream().filter(c -> c.getFirstName().concat(" " + c.getLastName()).equals(name)).findAny().orElse(null);
     }
 
-//    @Override
-//    public Contributor findLazy(Long id) {
-//        return contributorRepository.findLazy(id);
-//    }
+    @Override
+    public Contributor findLazy(Long id) {
+        return contributorRepository.findLazy(id);
+    }
+
+    @Override
+    public List<Contributor> findAllLazy() {
+        return contributorRepository.findAllLazy();
+    }
 }

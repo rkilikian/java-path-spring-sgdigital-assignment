@@ -8,21 +8,35 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/contributors")
 @RequiredArgsConstructor
 public class ContributorController extends AbstractController<Contributor> {
     private final ContributorService contributorService;
+    private final String searchToken = "contributors";
 
     @Override
     public BaseService<Contributor, Long> getBaseService() {
         return contributorService;
     }
 
-//    @Override
-//    @GetMapping("/{id}")
-//    public ResponseEntity<ApiResponse<Contributor>> get(@PathVariable("id") final Long id) {
-//        return ResponseEntity.ok(ApiResponse.<Contributor>builder().data(contributorService.findLazy(id)).build());
-//    }
+    @Override
+    public String getSearchToken() {
+        return this.searchToken;
+    }
+
+    @Override
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<Contributor>> get(@PathVariable("id") final Long id) {
+        return ResponseEntity.ok(ApiResponse.<Contributor>builder().data(contributorService.findLazy(id)).searchToken(searchToken).build());
+    }
+
+    @Override
+    @GetMapping
+    public ResponseEntity<ApiResponse<List<Contributor>>> findAll() {
+        return ResponseEntity.ok(ApiResponse.<List<Contributor>>builder().data(contributorService.findAllLazy()).searchToken(searchToken).build());
+    }
 
 }

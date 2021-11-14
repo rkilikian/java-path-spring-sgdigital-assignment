@@ -1,32 +1,42 @@
 package gr.codelearn.spring.assignment.smdb.app.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import com.fasterxml.jackson.annotation.*;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({"film_id", "contributor_id"})
 @Data
 @SuperBuilder
 @NoArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "FILMCONTRIBUTORS")
+@Table(name = "FILMCONTRIBUTORS", indexes = {
+        @Index(columnList = "film_id"),
+        @Index(columnList = "contributor_id"),
+        @Index(columnList = "contributortype_id")
+})
 @SequenceGenerator(name = "idGenerator", sequenceName = "FILM_CONTRIBUTORS_SEQ", initialValue = 1, allocationSize = 1)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Long.class)
 public class FilmContributor extends BaseModel {
+    @JsonBackReference("filmContributors")
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name="film_id")
     private Film film;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JsonBackReference("filmContributions")
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name="contributor_id")
+    //@JsonIgnore
     private Contributor contributor;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name="contributortype_id")
     private ContributorType contributorType;
 }

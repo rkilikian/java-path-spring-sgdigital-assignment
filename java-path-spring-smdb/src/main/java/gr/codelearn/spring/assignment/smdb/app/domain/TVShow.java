@@ -1,21 +1,21 @@
 package gr.codelearn.spring.assignment.smdb.app.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.Year;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @SuperBuilder
@@ -24,17 +24,19 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "TVSHOWS")
-@SequenceGenerator(name = "idGenerator", sequenceName = "TVSHOWS_SEQ", initialValue = 1, allocationSize = 1)
-public class TVShow  extends BaseModel {
-
-    @NotNull
+@SequenceGenerator(name = "idGenerator", sequenceName = "TV_SHOWS_SEQ", initialValue = 1, allocationSize = 1)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Long.class)
+public class TVShow extends BaseModel {
+    @NotNull(message = "TV Show's title should not be empty.")
+    @Column(length = 50, nullable = false)
     private String title;
 
-    @NotNull
+    @NotNull(message = "TV Show's genre should not be empty.")
+    @Column(length = 15, nullable = false)
     private String genre;
 
     @NotNull
-    @Column(columnDefinition = "smallint")
+    @Column(nullable = false, columnDefinition = "smallint")
     private Year releaseYear;
 
     @Column(nullable = false)
@@ -50,5 +52,10 @@ public class TVShow  extends BaseModel {
 
     @NotNull
     private int seasonsCount;
-    //private Set<TVShowContributor> contributors = new HashSet<TVShowContributor>();
+
+    @JsonManagedReference("tvShowContributors")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "tvShow")
+    private final List<TVShowContributor> tvShowContributors = new ArrayList<>();
 }

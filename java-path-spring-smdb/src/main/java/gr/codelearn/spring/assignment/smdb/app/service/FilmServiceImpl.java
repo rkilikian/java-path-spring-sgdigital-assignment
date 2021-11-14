@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class FilmServiceImpl extends BaseServiceImpl<Film> implements FilmService {
@@ -27,4 +29,15 @@ public class FilmServiceImpl extends BaseServiceImpl<Film> implements FilmServic
     private FilmContributor newFilmContributor(Film film, Contributor contributor, ContributorType contributorType) {
         return FilmContributor.builder().film(film).contributor(contributor).contributorType(contributorType).build();
     }
+
+    @Override
+    public Film findLazy(Long id) {
+        return filmRepository.findLazy(id);
+    }
+
+    @Override
+    public List<Film> findAllLazy() {
+        return filmRepository.findAllLazy();
+    }
+
 }
